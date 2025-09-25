@@ -26,6 +26,26 @@ def count_gender(stud_list):
     return(grouped_students)    
 
 
-rez = read_students(src)
-count_gend = count_gender(rez)
-print(count_gend)
+def create_students(**kwargs):
+    try:
+        name, age, gender = kwargs.get('name', 'нет данных'), kwargs.get('age', 0), kwargs.get('gender', 'N') 
+        with open('students.txt', 'a', encoding='utf-8') as file:  
+            file.write(f"\n{name}, {gender}, {age}")
+        print(f'Студент : {name} успешно сохранен')  
+    except:
+        print(f'Ошибка при сохранении')
+
+def select_student_by_first_letter(fl, student_list):
+    #rez = [student for student in student_list if student['name'].lower().startswith(fl.lower())]
+    rez = list(filter(lambda x: x['name'].lower().startswith(str(fl).lower()), 
+            student_list))
+    return(rez)
+
+
+if __name__ == '__main__':
+    rez = read_students(src)
+    #count_gend = count_gender(rez)
+    student = {'name': 'Фролова Анна Михайловна',
+                'age': 22, 
+                'gender': 'ж'}
+    print(select_student_by_first_letter('м', rez))
